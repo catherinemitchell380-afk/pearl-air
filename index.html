@@ -38,82 +38,77 @@
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     html{scroll-behavior:smooth;}
     body{font-family:'DM Sans',sans-serif;background:var(--night);color:var(--white);min-height:100vh;overflow-x:hidden;}
-    ::-webkit-scrollbar{width:5px;}
-    ::-webkit-scrollbar-track{background:var(--night-md);}
-    ::-webkit-scrollbar-thumb{background:var(--pearl-dk);border-radius:3px;}
-
-    /* ══ NAV ══ */
-    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 2rem;background:rgba(10,15,28,0.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(232,213,163,0.12);}
-    .nav-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:68px;}
-    .nav-logo{display:flex;align-items:center;gap:10px;font-family:'Playfair Display',serif;font-size:22px;font-weight:900;letter-spacing:-0.5px;cursor:pointer;}
+    
+    /* ══ NAVIGATION ══ */
+    nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:0 2rem;background:rgba(10,15,28,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(232,213,163,0.12);}
+    .nav-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:70px;}
+    .nav-logo{display:flex;align-items:center;gap:10px;font-family:'Playfair Display',serif;font-size:24px;font-weight:900;text-decoration:none;}
     .nav-logo .crane{color:var(--crane)}.nav-logo .air{color:var(--pearl)}
-    .nav-logo-sub{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--mist);font-family:'DM Sans',sans-serif;font-weight:400;margin-top:-2px;}
     .nav-links{display:flex;gap:2rem;}
-    .nav-links a{color:var(--fog);font-size:14px;text-decoration:none;transition:color .2s;}
+    .nav-links a{color:var(--fog);font-size:14px;text-decoration:none;transition:color .2s;font-weight:500;}
     .nav-links a:hover{color:var(--pearl);}
-    .nav-cta{background:var(--crane);color:#fff;border:none;border-radius:30px;padding:9px 22px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s;}
-    .nav-cta:hover{opacity:.85;}
+    .nav-cta{background:var(--crane);color:#fff;border:none;border-radius:30px;padding:10px 24px;font-size:13px;font-weight:600;cursor:pointer;transition:transform 0.2s;}
+    .nav-cta:hover{transform:scale(1.05);}
 
-    /* ══ HERO ══ */
-    .hero{min-height:100vh;background:radial-gradient(ellipse 80% 60% at 70% 40%,rgba(217,79,61,0.12),transparent 60%),radial-gradient(ellipse 60% 80% at 10% 80%,rgba(232,213,163,0.06),transparent 50%),linear-gradient(170deg,rgba(6,11,24,0.95) 0%,rgba(13,22,41,0.88) 50%,rgba(17,31,58,0.82) 100%),url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1600&q=85&auto=format&fit=crop') center/cover no-repeat;display:flex;flex-direction:column;position:relative;overflow:hidden;padding-top:68px;}
-    .hero-top{flex:1;display:flex;align-items:center;padding:5rem 2rem 3rem;max-width:1280px;margin:0 auto;width:100%;gap:4rem;}
-    .hero-left{flex:1;}
-    .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(232,213,163,0.1);border:1px solid rgba(232,213,163,0.25);color:var(--pearl);font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:6px 16px;border-radius:30px;margin-bottom:1.5rem;font-weight:500;animation:slideUp .8s ease both;}
-    .hero h1{font-family:'Playfair Display',serif;font-size:clamp(42px,6vw,78px);font-weight:900;line-height:1.05;margin-bottom:1.25rem;animation:slideUp .8s .1s ease both;}
-    .hero h1 em{color:var(--pearl);font-style:italic;}.hero h1 .red{color:var(--crane);font-style:normal;}
-    .hero-desc{color:var(--mist);font-size:17px;font-weight:300;line-height:1.7;max-width:480px;margin-bottom:2rem;}
-    .hero-right{width:320px;flex-shrink:0;animation:slideUp .8s .15s ease both;display:flex;flex-direction:column;gap:12px;}
-    .live-route-card{background:rgba(255,255,255,0.04);border:1px solid rgba(232,213,163,0.15);border-radius:var(--r-lg);padding:1.25rem;backdrop-filter:blur(10px);cursor:pointer;transition:all .25s;}
-    .lrc-route{display:flex;align-items:center;gap:10px;margin-bottom:.75rem;}
-    .lrc-iata{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--pearl);line-height:1;}
-    .lrc-amt{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--white);}
-    .lrc-hot{background:var(--crane);color:#fff;font-size:10px;padding:3px 10px;border-radius:20px;font-weight:600;}
+    /* ══ HERO SECTION ══ */
+    .hero{min-height:90vh;background:linear-gradient(rgba(10,15,28,0.7), rgba(10,15,28,0.7)), url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 20px;}
+    .hero h1{font-family:'Playfair Display',serif;font-size:clamp(40px, 8vw, 75px);line-height:1.1;margin-bottom:20px;}
+    .hero h1 em{color:var(--pearl);font-style:italic;}
+    .hero h1 span.red{color:var(--crane);font-style:normal;}
+    .hero-desc{color:var(--mist);font-size:18px;max-width:600px;margin-bottom:40px;font-weight:300;}
 
-    /* ══ SEARCH BOX ══ */
-    .search-wrapper{background:rgba(255,255,255,0.03);border-top:1px solid rgba(255,255,255,0.06);backdrop-filter:blur(20px);padding:2.5rem 2rem;}
-    .search-box{max-width:1280px;margin:0 auto;background:rgba(255,255,255,0.05);border:1px solid rgba(232,213,163,0.2);border-radius:var(--r-lg);overflow:hidden;}
-    .search-tabs{display:flex;background:rgba(0,0,0,0.2);}
-    .search-tab{padding:14px 24px;background:transparent;border:none;color:var(--mist);font-size:14px;cursor:pointer;border-bottom:2px solid transparent;}
+    /* ══ SEARCH ENGINE ══ */
+    .search-container{width:100%;max-width:1100px;background:var(--night-md);border:1px solid rgba(232,213,163,0.2);border-radius:var(--r-lg);padding:30px;margin-top:-80px;box-shadow:0 30px 60px rgba(0,0,0,0.5);position:relative;z-index:10;}
+    .search-tabs{display:flex;gap:10px;margin-bottom:20px;}
+    .search-tab{background:transparent;border:none;color:var(--mist);padding:10px 20px;cursor:pointer;font-weight:600;border-bottom:2px solid transparent;}
     .search-tab.active{color:var(--pearl);border-bottom-color:var(--pearl);}
-    .search-fields{display:grid;grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)) auto;gap:0;align-items:stretch;}
-    .sf{padding:1.25rem 1.5rem;border-right:1px solid rgba(255,255,255,0.07);display:flex;flex-direction:column;gap:5px;}
-    .sf label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--mist);font-weight:500;}
-    .sf input{background:transparent;border:none;outline:none;color:var(--white);font-size:16px;width:100%;}
-    .btn-search{background:var(--crane);border:none;cursor:pointer;padding:1.5rem 2.5rem;color:#fff;font-size:16px;font-weight:700;transition:opacity .2s;}
+    .search-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)) auto;gap:15px;align-items:end;}
+    .input-group{display:flex;flex-direction:column;gap:8px;}
+    .input-group label{font-size:11px;color:var(--pearl);text-transform:uppercase;letter-spacing:1px;}
+    .input-group input{padding:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:white;outline:none;}
+    .btn-search{background:var(--crane);color:white;border:none;padding:14px 35px;border-radius:10px;font-weight:700;cursor:pointer;transition:background 0.3s;}
+    .btn-search:hover{background:#b83d2f;}
 
-    /* ══ RESULTS ══ */
-    .results-section{display:none;background:var(--night-md);padding:3rem 2rem;}
-    .results-section.visible{display:block;}
-    .results-inner{max-width:1280px;margin:0 auto;}
-    .flight-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:var(--r-lg);margin-bottom:1rem;padding:1.5rem 2rem;cursor:pointer;display:grid;grid-template-columns:160px 1fr auto;align-items:center;}
-    .fc-price{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;color:var(--white);}
-    .fc-select-btn{margin-top:.75rem;padding:9px 22px;background:var(--crane);border:none;border-radius:20px;color:#fff;cursor:pointer;}
+    /* ══ LISTINGS SECTION ══ */
+    .listings-section{padding:100px 20px;max-width:1280px;margin:0 auto;}
+    .section-header{text-align:center;margin-bottom:60px;}
+    .section-header h2{font-family:'Playfair Display',serif;font-size:42px;margin-bottom:10px;}
+    .section-header h2 span{color:var(--pearl);}
+
+    /* Flight Cards */
+    .flight-list{margin-bottom:80px;}
+    .flight-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:var(--r-lg);padding:25px;margin-bottom:20px;display:grid;grid-template-columns:1fr 2fr 1fr;align-items:center;transition:border-color 0.3s;cursor:pointer;}
+    .flight-card:hover{border-color:var(--pearl);}
+    .fc-airline{font-weight:700;color:var(--pearl-dk);}
+    .fc-route{display:flex;align-items:center;justify-content:center;gap:20px;text-align:center;}
+    .fc-time-big{font-size:24px;font-weight:700;}
+    .fc-path{flex:1;height:2px;background:rgba(255,255,255,0.1);position:relative;}
+    .fc-path::after{content:'✈';position:absolute;top:-12px;left:50%;transform:translateX(-50%);color:var(--crane);}
+    .fc-price-block{text-align:right;}
+    .fc-price{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:var(--white);}
+
+    /* Safari Cards */
+    .safari-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:30px;}
+    .safari-card{background:var(--night-md);border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,0.05);transition:transform 0.3s;}
+    .safari-card:hover{transform:translateY(-10px);border-color:var(--pearl);}
+    .safari-img{height:250px;background-size:cover;background-position:center;}
+    .safari-body{padding:25px;}
+    .safari-tag{color:var(--crane);font-size:12px;font-weight:700;text-transform:uppercase;margin-bottom:10px;display:block;}
+    .safari-title{font-family:'Playfair Display',serif;font-size:24px;margin-bottom:15px;}
+    .safari-price{font-size:22px;color:var(--pearl);font-weight:700;}
 
     /* ══ MODAL ══ */
-    .modal-overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(6,11,24,0.92);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:1rem;}
-    .modal-overlay.open{display:flex;}
-    .modal{background:var(--night-md);border:1px solid rgba(232,213,163,0.25);border-radius:var(--r-lg);width:100%;max-width:600px;padding:2rem;}
-    .modal-head{display:flex;justify-content:space-between;margin-bottom:1.5rem;}
-    .modal-close{background:none;border:none;color:var(--mist);font-size:24px;cursor:pointer;}
-    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-    .field{display:flex;flex-direction:column;gap:5px;margin-bottom:1rem;}
-    .field label{font-size:11px;color:var(--mist);text-transform:uppercase;}
-    .field input{padding:12px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:var(--white);}
-    .wa-confirm-btn{width:100%;padding:16px;background:#25D366;border:none;border-radius:12px;color:#fff;font-size:16px;font-weight:700;cursor:pointer;margin-top:1rem;}
+    .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:2000;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(10px);}
+    .modal-overlay.active{display:flex;}
+    .modal{background:var(--night-lt);width:100%;max-width:550px;border-radius:25px;padding:40px;position:relative;border:1px solid var(--pearl);}
+    .modal-close{position:absolute;top:20px;right:20px;font-size:28px;cursor:pointer;color:var(--mist);}
+    .wa-confirm-btn{display:block;width:100%;padding:18px;background:#25D366;color:white;text-align:center;border-radius:12px;text-decoration:none;font-weight:700;margin-top:25px;font-size:16px;}
 
-    /* ══ TICKET MODAL COMPLETION ══ */
-    .ticket-price-bar {
-        background: linear-gradient(135deg, rgba(201, 168, 76, 0.15) 0%, rgba(10, 15, 28, 0) 100%);
-        padding: 1.5rem 2rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-top: 1px solid rgba(232, 213, 163, 0.15);
+    @media (max-width: 768px) {
+        .flight-card{grid-template-columns: 1fr; gap: 20px; text-align: center;}
+        .search-grid{grid-template-columns: 1fr;}
+        .hero h1{font-size: 40px;}
     }
-    .tpb-label { font-size: 11px; color: var(--mist); text-transform: uppercase; letter-spacing: 1px; }
-    .tpb-total { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 900; color: var(--pearl); }
-
-    @keyframes slideUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
     </style>
 </head>
 <body>
@@ -121,67 +116,95 @@
     <!-- NAVIGATION -->
     <nav>
         <div class="nav-inner">
-            <div class="nav-logo">
+            <a href="#" class="nav-logo">
                 <span class="crane">PEARL</span> <span class="air">AIR</span>
-                <div class="nav-logo-sub">Travel Uganda</div>
-            </div>
+            </a>
             <div class="nav-links">
-                <a href="#">Flights</a>
-                <a href="#">Safaris</a>
-                <a href="#">Deals</a>
+                <a href="#listings">Flights</a>
+                <a href="#safaris">Safaris</a>
             </div>
-            <button class="nav-cta">Book Now</button>
+            <button class="nav-cta">WhatsApp Support</button>
         </div>
     </nav>
 
-    <!-- HERO & SEARCH -->
+    <!-- HERO SECTION -->
     <section class="hero">
-        <div class="hero-top">
-            <div class="hero-left">
-                <div class="hero-eyebrow">Discover the Pearl of Africa</div>
-                <h1>Experience <em>Uganda</em> <br><span class="red">Like Never Before</span></h1>
-                <p class="hero-desc">Luxury safari tours and seamless flight bookings from Entebbe to the world.</p>
-            </div>
-            <div class="hero-right">
-                <div class="live-route-card">
-                    <div class="lrc-route">
-                        <div class="lrc-city"><div class="lrc-iata">EBB</div></div>
-                        <div class="lrc-plane">✈</div>
-                        <div class="lrc-city"><div class="lrc-iata">DXB</div></div>
-                    </div>
-                    <div class="lrc-price"><div class="lrc-amt">$450</div><div class="lrc-hot">Hot Deal</div></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="search-wrapper">
-            <div class="search-box">
-                <div class="search-tabs">
-                    <button class="search-tab active">Flights</button>
-                    <button class="search-tab">Safaris</button>
-                </div>
-                <div class="search-fields">
-                    <div class="sf"><label>From</label><input type="text" placeholder="Entebbe (EBB)"></div>
-                    <div class="sf"><label>To</label><input type="text" placeholder="Destination"></div>
-                    <div class="sf"><label>Date</label><input type="date"></div>
-                    <button class="btn-search" onclick="showResults()">Search</button>
-                </div>
-            </div>
-        </div>
+        <div class="hero-eyebrow">The Pearl of Africa Awaits</div>
+        <h1>Experience <em>Uganda</em> <br><span class="red">Like Never Before</span></h1>
+        <p class="hero-desc">Luxury safari tours and seamless flight bookings from Entebbe to the world. Your journey into the wild starts here.</p>
     </section>
 
-    <!-- RESULTS SECTION -->
-    <section id="results" class="results-section">
-        <div class="results-inner">
-            <h2>Available <span>Flights</span></h2>
-            <div class="flight-list">
-                <div class="flight-card" onclick="openModal()">
-                    <div class="fc-airline">Pearl Airways</div>
-                    <div class="fc-route">EBB ➔ DXB (6h 20m)</div>
-                    <div class="fc-price-block">
-                        <div class="fc-price">$450</div>
-                        <button class="fc-select-btn">Select</button>
-                    </div>
+    <!-- SEARCH BOX -->
+    <div style="display:flex; justify-content:center; padding:0 20px;">
+        <div class="search-container">
+            <div class="search-tabs">
+                <button class="search-tab active">Flight Search</button>
+                <button class="search-tab">Custom Safari</button>
+            </div>
+            <div class="search-grid">
+                <div class="input-group"><label>From</label><input type="text" id="fromCity" placeholder="Entebbe (EBB)"></div>
+                <div class="input-group"><label>To</label><input type="text" id="toCity" placeholder="Where to?"></div>
+                <div class="input-group"><label>Travel Date</label><input type="date"></div>
+                <button class="btn-search" onclick="scrollToResults()">Search Deals</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LISTINGS SECTION -->
+    <section id="listings" class="listings-section">
+        <div class="section-header">
+            <h2>Current <span>Flight Deals</span></h2>
+            <p>Hand-picked routes from Entebbe International Airport</p>
+        </div>
+
+        <div class="flight-list">
+            <div class="flight-card" onclick="openBooking('Dubai Direct', '$450')">
+                <div class="fc-airline">Pearl Airways • PA-202</div>
+                <div class="fc-route">
+                    <div class="fc-time"><div class="fc-time-big">08:30</div><div>EBB</div></div>
+                    <div class="fc-path"></div>
+                    <div class="fc-time"><div class="fc-time-big">14:20</div><div>DXB</div></div>
+                </div>
+                <div class="fc-price-block">
+                    <div class="fc-price">$450</div>
+                    <div style="font-size:12px; color:var(--mist);">Economy Class</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="safaris" class="section-header" style="margin-top:100px;">
+            <h2>Wilderness <span>Safari Packages</span></h2>
+            <p>Explore the heart of Uganda's national parks</p>
+        </div>
+
+        <div class="safari-grid">
+            <!-- Bwindi -->
+            <div class="safari-card" onclick="openBooking('Bwindi Gorilla Trek', '$1,200')">
+                <div class="safari-img" style="background-image: url('https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=800&q=80')"></div>
+                <div class="safari-body">
+                    <span class="safari-tag">3 Days • Gorilla Trekking</span>
+                    <h3 class="safari-title">Bwindi Impenetrable Forest</h3>
+                    <div class="safari-price">$1,200</div>
+                </div>
+            </div>
+
+            <!-- Murchison -->
+            <div class="safari-card" onclick="openBooking('Murchison Falls Safari', '$850')">
+                <div class="safari-img" style="background-image: url('https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=800&q=80')"></div>
+                <div class="safari-body">
+                    <span class="safari-tag">4 Days • Big Five & Falls</span>
+                    <h3 class="safari-title">Murchison Falls National Park</h3>
+                    <div class="safari-price">$850</div>
+                </div>
+            </div>
+
+            <!-- Queen Elizabeth -->
+            <div class="safari-card" onclick="openBooking('Queen Elizabeth NP', '$950')">
+                <div class="safari-img" style="background-image: url('https://images.unsplash.com/photo-1523805009345-7448845a9e13?auto=format&fit=crop&w=800&q=80')"></div>
+                <div class="safari-body">
+                    <span class="safari-tag">3 Days • Tree Climbing Lions</span>
+                    <h3 class="safari-title">Queen Elizabeth Park</h3>
+                    <div class="safari-price">$950</div>
                 </div>
             </div>
         </div>
@@ -190,45 +213,50 @@
     <!-- BOOKING MODAL -->
     <div id="bookingModal" class="modal-overlay">
         <div class="modal">
-            <div class="modal-head">
-                <h2>Quick Booking</h2>
-                <button class="modal-close" onclick="closeModal()">×</button>
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <h2 id="mTitle" style="font-family:'Playfair Display',serif; font-size:32px; color:var(--pearl); margin-bottom:10px;">Confirm Booking</h2>
+            <p id="mPrice" style="font-size:20px; margin-bottom:30px;"></p>
+            
+            <div class="input-group" style="margin-bottom:20px;">
+                <label>Your Full Name</label>
+                <input type="text" id="uName" placeholder="Enter your name">
             </div>
-            <div class="modal-body">
-                <div class="form-grid">
-                    <div class="field"><label>First Name</label><input type="text" placeholder="John"></div>
-                    <div class="field"><label>Last Name</label><input type="text" placeholder="Doe"></div>
-                </div>
-                <div class="field"><label>Phone Number</label><input type="text" placeholder="+256..."></div>
-                <button class="wa-confirm-btn">Confirm via WhatsApp</button>
-                <div class="ticket-price-bar">
-                    <div class="tpb-label">Total Payable</div>
-                    <div class="tpb-total">$450</div>
-                </div>
-            </div>
+            
+            <a href="#" id="waSend" class="wa-confirm-btn" target="_blank">Confirm Booking via WhatsApp</a>
+            <p style="text-align:center; font-size:12px; color:var(--mist); margin-top:15px;">Our agent will reply instantly to complete payment.</p>
         </div>
     </div>
 
     <script>
-        function showResults() {
-            document.getElementById('results').classList.add('visible');
-            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        // Update this with your actual WhatsApp Number
+        const WHATSAPP_NUMBER = "256700000000"; 
+
+        function scrollToResults() {
+            document.getElementById('listings').scrollIntoView({ behavior: 'smooth' });
         }
 
-        function openModal() {
-            document.getElementById('bookingModal').classList.add('open');
+        function openBooking(title, price) {
+            document.getElementById('mTitle').innerText = title;
+            document.getElementById('mPrice').innerText = "Selected Package: " + price;
+            document.getElementById('bookingModal').classList.add('active');
+            
+            const btn = document.getElementById('waSend');
+            const nameInput = document.getElementById('uName');
+
+            btn.onclick = function() {
+                const name = nameInput.value || "Traveler";
+                const text = `Hello Pearl Air! I would like to book: ${title} (${price}). My name is ${name}.`;
+                btn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+            };
         }
 
         function closeModal() {
-            document.getElementById('bookingModal').classList.remove('open');
+            document.getElementById('bookingModal').classList.remove('active');
         }
 
         // Close on outside click
         window.onclick = function(event) {
-            const modal = document.getElementById('bookingModal');
-            if (event.target == modal) {
-                closeModal();
-            }
+            if (event.target.classList.contains('modal-overlay')) closeModal();
         }
     </script>
 </body>
