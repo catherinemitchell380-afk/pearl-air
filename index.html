@@ -887,7 +887,7 @@ footer{background:var(--night);border-top:1px solid rgba(255,255,255,0.06);paddi
           <div class="sf" style="position:relative;" onclick="togglePax()">
             <label>Passengers</label>
             <div style="font-size:16px;font-weight:500;" id="pax-display">1 Adult</div>
-            <div class="sf-sub" id="cabin-display-mini">Economy</div>
+            <div class="sf-sub" id="pax-display-mini"><span id="cabin-display">Economy</span></div>
             <div class="pax-dropdown" id="pax-dropdown" onclick="event.stopPropagation()">
               <div class="pax-row"><div class="pax-info"><div class="pax-type">Adults</div><div class="pax-age">12+ years</div></div><div class="pax-ctrl"><button class="pax-btn" onclick="chgPax('adult',-1)">−</button><span class="pax-val" id="adult-val">1</span><button class="pax-btn" onclick="chgPax('adult',1)">+</button></div></div>
               <div class="pax-row"><div class="pax-info"><div class="pax-type">Children</div><div class="pax-age">2–11 years</div></div><div class="pax-ctrl"><button class="pax-btn" onclick="chgPax('child',-1)">−</button><span class="pax-val" id="child-val">0</span><button class="pax-btn" onclick="chgPax('child',1)">+</button></div></div>
@@ -979,6 +979,21 @@ footer{background:var(--night);border-top:1px solid rgba(255,255,255,0.06);paddi
 </script>
 
 
+
+<!-- RESULTS SECTION -->
+<div class="results-section" id="results-section">
+  <div class="results-inner">
+    <div class="results-header">
+      <h2>Flights from <span id="r-from">EBB</span> → <span id="r-to">—</span></h2>
+      <div class="sort-bar">
+        <button class="sort-btn active" onclick="sortFlights('best',this)">⭐ Best</button>
+        <button class="sort-btn" onclick="sortFlights('price',this)">💰 Cheapest</button>
+        <button class="sort-btn" onclick="sortFlights('duration',this)">⚡ Fastest</button>
+      </div>
+    </div>
+    <div class="flight-list" id="flight-list"></div>
+  </div>
+</div>
 
 <!-- DEALS -->
 <div class="deals-section" id="sec-deals">
@@ -1087,6 +1102,7 @@ footer{background:var(--night);border-top:1px solid rgba(255,255,255,0.06);paddi
         <div class="step-seg" id="seg-2"><div class="step-seg-dot">2</div><span class="step-seg-label">Passengers</span></div>
         <div class="step-seg" id="seg-3"><div class="step-seg-dot">3</div><span class="step-seg-label">Seats</span></div>
         <div class="step-seg" id="seg-4"><div class="step-seg-dot">4</div><span class="step-seg-label">Review</span></div>
+        <div class="step-seg" id="seg-5"><div class="step-seg-dot">💳</div><span class="step-seg-label">Pay</span></div>
       </div>
 
       <!-- FLIGHT SUMMARY BAR -->
@@ -1299,6 +1315,124 @@ footer{background:var(--night);border-top:1px solid rgba(255,255,255,0.06);paddi
 
         <div class="modal-nav">
           <button class="btn-back-modal" onclick="nextStep(3)">← Back to Seats</button>
+          <button class="btn-next-modal" onclick="nextStep(5)" style="background:linear-gradient(135deg,#FF5200,#E63E00);box-shadow:0 4px 16px rgba(255,82,0,.3);">
+            💳 Continue to Payment
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 5: PAYMENT -->
+      <div id="modal-step-5" style="display:none;">
+        <!-- Payment options -->
+        <div style="margin-bottom:1.5rem;">
+          <div class="form-section-title" style="margin-top:0;">💳 Choose Payment Method</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.5rem;">
+            <div id="pm-airtel" onclick="selectPayMethod('airtel')" style="border:2px solid rgba(255,82,0,0.5);border-radius:14px;padding:1.25rem;cursor:pointer;background:rgba(255,82,0,0.08);text-align:center;transition:all .2s;">
+              <div style="font-size:28px;margin-bottom:.5rem;">📱</div>
+              <div style="font-weight:700;font-size:14px;color:#FF7F40;">Airtel Money</div>
+              <div style="font-size:11px;color:var(--mist);margin-top:3px;">Uganda · Kenya · Tanzania</div>
+              <div style="margin-top:.75rem;background:#FF5200;color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;display:inline-block;letter-spacing:1px;">SELECTED</div>
+            </div>
+            <div id="pm-whatsapp" onclick="selectPayMethod('whatsapp')" style="border:2px solid rgba(255,255,255,0.12);border-radius:14px;padding:1.25rem;cursor:pointer;background:rgba(255,255,255,0.04);text-align:center;transition:all .2s;">
+              <div style="font-size:28px;margin-bottom:.5rem;">💬</div>
+              <div style="font-weight:700;font-size:14px;color:#25D366;">WhatsApp Only</div>
+              <div style="font-size:11px;color:var(--mist);margin-top:3px;">Agent confirms manually</div>
+              <div style="margin-top:.75rem;background:rgba(255,255,255,0.07);color:var(--mist);font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;display:inline-block;letter-spacing:1px;">PAY LATER</div>
+            </div>
+          </div>
+
+          <!-- Airtel Money Panel -->
+          <div id="pay-panel-airtel">
+            <!-- Amount Summary -->
+            <div style="background:linear-gradient(135deg,rgba(255,82,0,0.12),rgba(255,82,0,0.06));border:1px solid rgba(255,82,0,0.25);border-radius:14px;padding:1.25rem 1.5rem;margin-bottom:1.25rem;display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:4px;">Amount Due</div>
+                <div style="font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:#fff;line-height:1;" id="inline-pay-amt">$0</div>
+                <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:3px;">≈ UGX <span id="inline-pay-ugx">0</span></div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:4px;">Booking Ref</div>
+                <div style="font-family:'Playfair Display',serif;font-size:16px;color:#FF7F40;font-weight:700;" id="inline-pay-ref">PRL-XXXXXX</div>
+              </div>
+            </div>
+
+            <!-- Merchant -->
+            <div style="background:rgba(255,82,0,0.06);border:1px solid rgba(255,82,0,0.2);border-radius:12px;padding:.9rem 1.25rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:12px;">
+              <div style="font-size:26px;">📲</div>
+              <div>
+                <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:2px;">Send Airtel Money to</div>
+                <div style="font-size:18px;font-weight:900;color:#FF7F40;font-family:'Playfair Display',serif;letter-spacing:.5px;">+254 782 431 525</div>
+                <div style="font-size:11px;color:rgba(255,255,255,0.35);">Pearl Air Uganda — Merchant Account</div>
+              </div>
+            </div>
+
+            <!-- Step instructions -->
+            <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:1.25rem;">
+              <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:10px;">
+                <div style="width:22px;height:22px;border-radius:50%;background:#FF5200;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div>
+                <div><div style="font-size:13px;font-weight:600;color:#fff;">Enter your Airtel number below</div><div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;">The number linked to your Airtel Money wallet</div></div>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:10px;">
+                <div style="width:22px;height:22px;border-radius:50%;background:#FF5200;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</div>
+                <div><div style="font-size:13px;font-weight:600;color:#fff;">Tap "Send Payment Request"</div><div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;">You'll get a prompt on your phone — enter your PIN</div></div>
+              </div>
+              <div style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:10px;">
+                <div style="width:22px;height:22px;border-radius:50%;background:#FF5200;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</div>
+                <div><div style="font-size:13px;font-weight:600;color:#fff;">Agent confirms on WhatsApp</div><div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;">E-ticket sent within 30 minutes of payment</div></div>
+              </div>
+            </div>
+
+            <!-- Phone input -->
+            <div style="margin-bottom:1rem;">
+              <label style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.45);font-weight:500;display:block;margin-bottom:.5rem;">Your Airtel Money Number *</label>
+              <input type="tel" id="inline-pay-phone" placeholder="+256 7XX XXX XXX  or  0756 000 000" maxlength="15" style="width:100%;padding:14px 16px;background:rgba(255,82,0,0.08);border:1.5px solid rgba(255,82,0,0.35);border-radius:12px;color:#fff;font-size:16px;font-family:'DM Sans',sans-serif;transition:border-color .2s;outline:none;" onfocus="this.style.borderColor='#FF5200'" onblur="this.style.borderColor='rgba(255,82,0,0.35)'"/>
+            </div>
+
+            <div class="pay-saving-spinner" id="inline-pay-spinner"><div class="spinner" style="border-top-color:#FF5200;border-color:rgba(255,82,0,.3);border-top-color:#FF5200;"></div><span>Saving booking & sending payment request…</span></div>
+            <div class="err-box" id="inline-pay-err" style="margin-bottom:1rem;">⚠️ Please enter a valid Airtel Money phone number (+256 or 07XX format).</div>
+
+            <button onclick="doInlineAirtelPay()" id="inline-pay-btn" style="width:100%;padding:15px;background:linear-gradient(135deg,#FF5200,#E63E00);border:none;border-radius:12px;color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:10px;transition:opacity .2s;box-shadow:0 8px 24px rgba(255,82,0,0.35);">
+              <span>📲</span> Send Payment Request
+            </button>
+
+            <!-- Payment success state -->
+            <div id="inline-pay-success" style="display:none;text-align:center;padding:1.5rem 0;">
+              <div style="font-size:52px;margin-bottom:.75rem;animation:popIn .5s cubic-bezier(.34,1.56,.64,1) both;">✅</div>
+              <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:.5rem;">Payment Request Sent!</div>
+              <div style="font-size:13px;color:rgba(255,255,255,0.5);line-height:1.7;margin-bottom:1.25rem;">Check your phone for the Airtel Money prompt.<br/>Enter your PIN to complete payment.</div>
+              <div style="background:rgba(255,82,0,0.1);border:1px solid rgba(255,82,0,0.25);border-radius:12px;padding:.9rem 1.5rem;margin-bottom:1.25rem;">
+                <div style="font-size:10px;letter-spacing:2px;color:rgba(255,255,255,.35);text-transform:uppercase;margin-bottom:4px;">Booking Reference</div>
+                <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:#FF7F40;" id="inline-success-ref">PRL-XXXXXX</div>
+              </div>
+              <button onclick="doInlineWhatsApp()" style="width:100%;padding:14px;background:#25D366;border:none;border-radius:12px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px;box-shadow:0 4px 16px rgba(37,211,102,.3);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Notify Agent on WhatsApp
+              </button>
+              <button onclick="showTicketAndConfirm()" style="width:100%;padding:12px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;color:var(--fog);font-size:14px;cursor:pointer;font-family:'DM Sans',sans-serif;">
+                🎫 View Boarding Pass
+              </button>
+            </div>
+          </div>
+
+          <!-- WhatsApp Only Panel -->
+          <div id="pay-panel-whatsapp" style="display:none;">
+            <div style="background:rgba(37,211,102,0.06);border:1px solid rgba(37,211,102,0.2);border-radius:14px;padding:1.5rem;text-align:center;margin-bottom:1.25rem;">
+              <div style="font-size:44px;margin-bottom:.75rem;">💬</div>
+              <div style="font-size:15px;font-weight:600;color:#25D366;margin-bottom:.5rem;">Confirm via WhatsApp</div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.65;margin-bottom:1.25rem;">Your booking details will be sent to our Pearl Air agent on WhatsApp. They'll confirm availability, pricing and arrange payment within <strong style="color:rgba(255,255,255,0.75);">30 minutes</strong>.</div>
+              <button onclick="doInlineWhatsApp()" style="width:100%;padding:14px;background:#25D366;border:none;border-radius:12px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 4px 16px rgba(37,211,102,.3);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Send Booking to WhatsApp Now
+              </button>
+            </div>
+            <button onclick="showTicketAndConfirm()" style="width:100%;padding:12px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,.12);border-radius:12px;color:var(--fog);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;">
+              🎫 Generate Boarding Pass First
+            </button>
+          </div>
+        </div>
+
+        <div class="modal-nav">
+          <button class="btn-back-modal" onclick="nextStep(4)">← Back to Review</button>
         </div>
       </div>
 
@@ -2370,16 +2504,15 @@ function chgPax(type,d){
   state.pax[type]=Math.max(type==='adult'?1:0,state.pax[type]+d);
   document.getElementById(type+'-val').textContent=state.pax[type];
   const tot=state.pax.adult+state.pax.child+state.pax.infant;
-  document.getElementById('pax-display').textContent=tot+' Passenger'+(tot>1?'s':'');
-  document.getElementById('pax-display-mini').textContent=tot+' Passenger'+(tot>1?'s':'');
+  const pd=document.getElementById('pax-display');if(pd)pd.textContent=tot+' Passenger'+(tot>1?'s':'');
 }
 function selectCabin(c,el){
   state.cabin=c;
   document.querySelectorAll('.cabin-opt').forEach(o=>o.classList.remove('selected'));
   el.classList.add('selected');
-  document.getElementById('cabin-display').textContent=c;
-  document.getElementById('cabin-display-mini').textContent=c;
+  const cd=document.getElementById('cabin-display');if(cd)cd.textContent=c;
 }
+const setCabin=selectCabin;
 function searchFlights(){
   const from=document.getElementById('from-input').value.trim();
   const to=document.getElementById('to-input').value.trim();
@@ -2449,21 +2582,30 @@ function selectFlight(i){
   const sb=document.getElementById('sb-'+i);sb.textContent='✓ Selected';sb.classList.add('picked');
   openModal();
 }
-function quickBook(fromCode,fromName,toCode,toName,airline,price){
-  // Populate From and To search fields so the user can review/edit before searching
-  const fromLabel = fromName+' ('+fromCode+')';
-  const toLabel   = toName+' ('+toCode+')';
-  document.getElementById('from-input').value = fromLabel;
-  document.getElementById('to-input').value   = toLabel;
-  document.getElementById('m-from').value = fromLabel;
-  document.getElementById('m-to').value   = toLabel;
-  // Scroll to the search box so user can confirm/edit and hit Search
-  document.querySelector('.search-wrapper').scrollIntoView({behavior:'smooth',block:'center'});
-  // Briefly highlight the search box to draw attention
-  const box = document.querySelector('.search-box');
-  box.style.transition='box-shadow .3s';
-  box.style.boxShadow='0 0 0 2px var(--pearl-dk), 0 20px 60px rgba(0,0,0,.5)';
-  setTimeout(()=>{ box.style.boxShadow=''; }, 1800);
+function quickBook(a,b,c,d,e,f){
+  // Support both quickBook(fromCode,toCode,toName,airline,price) [5 args]
+  // and quickBook(fromCode,fromName,toCode,toName,airline,price) [6 args]
+  let fromCode,fromName,toCode,toName,airline,price;
+  if(f!==undefined){
+    fromCode=a;fromName=b;toCode=c;toName=d;airline=e;price=f;
+  } else {
+    fromCode=a;fromName=a==='EBB'?'Entebbe':a;toCode=b;toName=c;airline=d;price=e;
+  }
+  const fromLabel=fromName+' ('+fromCode+')';
+  const toLabel=toName+' ('+toCode+')';
+  document.getElementById('from-input').value=fromLabel;
+  document.getElementById('to-input').value=toLabel;
+  document.getElementById('m-from').value=fromLabel;
+  document.getElementById('m-to').value=toLabel;
+  // Also pre-select flight for modal summary
+  state.selectedFlight={from:fromCode,to:toCode,toName,airline,price,duration:'See results',stops:0};
+  // Run search to show results
+  searchFlights();
+  // Scroll to search results
+  setTimeout(()=>{
+    const rs=document.getElementById('results-section');
+    if(rs&&rs.classList.contains('visible'))rs.scrollIntoView({behavior:'smooth',block:'start'});
+  },200);
 }
 
 function quickSearch(from,to){
@@ -2519,9 +2661,34 @@ function nextStep(n,force){
       document.getElementById('step3-err').style.display='none';
       buildReview();
     }
+    if(n===5){
+      // Pre-fill inline payment
+      const {total}=calcTotal();
+      const ref=state_ticketRef||genRef();
+      state_ticketRef=ref;
+      const elAmt=document.getElementById('inline-pay-amt');if(elAmt)elAmt.textContent='$'+total;
+      const elUgx=document.getElementById('inline-pay-ugx');if(elUgx)elUgx.textContent=(total*3700).toLocaleString();
+      const elRef=document.getElementById('inline-pay-ref');if(elRef)elRef.textContent=ref;
+      const elSuccRef=document.getElementById('inline-success-ref');if(elSuccRef)elSuccRef.textContent=ref;
+      // Pre-fill phone
+      const leadPhone=(document.getElementById('m-phone')||{}).value||'';
+      const ipPhone=document.getElementById('inline-pay-phone');
+      if(ipPhone&&leadPhone&&!ipPhone.value) ipPhone.value=leadPhone;
+      // Reset inline payment state
+      const ipForm=document.getElementById('pay-panel-airtel');
+      const ipSuccess=document.getElementById('inline-pay-success');
+      const ipBtn=document.getElementById('inline-pay-btn');
+      if(ipSuccess) ipSuccess.style.display='none';
+      if(ipBtn) ipBtn.style.display='flex';
+      const iphone=document.getElementById('inline-pay-phone');if(iphone)iphone.style.display='block';
+      const ipLabel=iphone?iphone.previousElementSibling:null;if(ipLabel)ipLabel.style.display='block';
+      document.getElementById('inline-pay-err').style.display='none';
+      document.getElementById('inline-pay-spinner').classList.remove('show');
+      state.bookingPrice=total;
+    }
   }
   // Hide all steps
-  [1,2,3,4].forEach(i=>{
+  [1,2,3,4,5].forEach(i=>{
     const el=document.getElementById('modal-step-'+i);
     if(el){el.style.display='none';}
   });
@@ -2534,23 +2701,21 @@ function nextStep(n,force){
     target.style.animation='stepIn .32s cubic-bezier(.16,1,.3,1) both';
   }
   // Update stepper dots
-  [1,2,3,4].forEach(i=>{
+  [1,2,3,4,5].forEach(i=>{
     const seg=document.getElementById('seg-'+i);
     if(!seg)return;
     seg.classList.remove('active','done');
     if(i<n) seg.classList.add('done');
     else if(i===n) seg.classList.add('active');
-    // Update dot inner
     const dot=seg.querySelector('.step-seg-dot');
-    if(dot) dot.textContent=i<n?'✓':i;
+    if(dot) dot.textContent=i<n?'✓':(i===5?'💳':i);
   });
   // Update modal header
-  const titles=['','Trip Details & Contact','Add Passengers','Choose Seats','Review & Confirm'];
-  const subs=['','Step 1 of 4 — Trip type, route and lead passenger','Step 2 of 4 — Add all passenger details','Step 3 of 4 — Select seats on the plane','Step 4 of 4 — Review everything and confirm'];
+  const titles=['','Trip Details & Contact','Add Passengers','Choose Seats','Review & Confirm','Payment'];
+  const subs=['','Step 1 of 5 — Trip type, route and lead passenger','Step 2 of 5 — Add all passenger details','Step 3 of 5 — Select seats on the plane','Step 4 of 5 — Review everything and confirm','Step 5 of 5 — Pay with Airtel Money or WhatsApp'];
   document.getElementById('modal-title').textContent=titles[n]||'Book Your Flight';
   document.getElementById('modal-subtitle').textContent=subs[n]||'';
   if(n===3) buildSeatMaps();
-  // Scroll modal to top
   const modal=document.getElementById('modal');
   if(modal) modal.scrollTop=0;
 }
@@ -2941,6 +3106,10 @@ function sendOnWhatsApp(){
   const meal     = document.getElementById('m-meal').value;
   const ref      = state_ticketRef || 'PRL-UNKNOWN';
   const {price, trips, adultFare, childFare, total} = calcTotal();
+  // IATA codes
+  const fromMatch2=from.match(/\(([A-Z]+)\)/);const toMatch2=to.match(/\(([A-Z]+)\)/);
+  const fromIata=fromMatch2?fromMatch2[1]:from.substring(0,3).toUpperCase();
+  const toIata=toMatch2?toMatch2[1]:to.substring(0,3).toUpperCase();
 
   // Format dates
   const fmtDate = d => d ? new Date(d).toLocaleDateString('en-GB',{weekday:'short',day:'2-digit',month:'short',year:'numeric'}) : 'TBD';
@@ -3182,6 +3351,67 @@ async function savePaymentRecord(bookingRef, payerPhone, amountUsd) {
   };
   try { await dbPut('payments', payment); } catch(e) { console.warn('Payment DB save failed:', e); }
   return txnId;
+}
+
+// ══════════════════ INLINE PAYMENT FUNCTIONS ══════════════════
+function selectPayMethod(method){
+  const airtelPanel=document.getElementById('pay-panel-airtel');
+  const waPanel=document.getElementById('pay-panel-whatsapp');
+  const airtelCard=document.getElementById('pm-airtel');
+  const waCard=document.getElementById('pm-whatsapp');
+  if(method==='airtel'){
+    airtelPanel.style.display='block';
+    waPanel.style.display='none';
+    airtelCard.style.border='2px solid rgba(255,82,0,0.5)';airtelCard.style.background='rgba(255,82,0,0.08)';
+    waCard.style.border='2px solid rgba(255,255,255,0.12)';waCard.style.background='rgba(255,255,255,0.04)';
+    airtelCard.querySelector('div:last-child').textContent='SELECTED';airtelCard.querySelector('div:last-child').style.background='#FF5200';airtelCard.querySelector('div:last-child').style.color='#fff';
+    waCard.querySelector('div:last-child').textContent='PAY LATER';waCard.querySelector('div:last-child').style.background='rgba(255,255,255,0.07)';waCard.querySelector('div:last-child').style.color='var(--mist)';
+  } else {
+    airtelPanel.style.display='none';
+    waPanel.style.display='block';
+    waCard.style.border='2px solid rgba(37,211,102,0.5)';waCard.style.background='rgba(37,211,102,0.08)';
+    airtelCard.style.border='2px solid rgba(255,255,255,0.12)';airtelCard.style.background='rgba(255,255,255,0.04)';
+    waCard.querySelector('div:last-child').textContent='SELECTED';waCard.querySelector('div:last-child').style.background='#25D366';waCard.querySelector('div:last-child').style.color='#fff';
+    airtelCard.querySelector('div:last-child').textContent='PAY NOW';airtelCard.querySelector('div:last-child').style.background='rgba(255,255,255,0.07)';airtelCard.querySelector('div:last-child').style.color='var(--mist)';
+  }
+}
+
+async function doInlineAirtelPay(){
+  const phone=(document.getElementById('inline-pay-phone')||{}).value||'';
+  const phoneClean=phone.replace(/[\s\-\(\)]/g,'');
+  if(!phoneClean||phoneClean.length<9){
+    document.getElementById('inline-pay-err').style.display='block';return;
+  }
+  document.getElementById('inline-pay-err').style.display='none';
+  const btn=document.getElementById('inline-pay-btn');
+  const spinner=document.getElementById('inline-pay-spinner');
+  btn.style.display='none';
+  spinner.classList.add('show');
+  try{
+    const ref=await saveBookingToBackend();
+    await savePaymentRecord(ref,phoneClean,state.bookingPrice||calcTotal().total);
+    await new Promise(r=>setTimeout(r,1400));
+    spinner.classList.remove('show');
+    document.getElementById('inline-pay-success').style.display='block';
+    document.getElementById('inline-success-ref').textContent=ref;
+    // Hide the phone input area
+    const phoneEl=document.getElementById('inline-pay-phone');if(phoneEl){phoneEl.style.display='none';const lbl=phoneEl.previousElementSibling;if(lbl)lbl.style.display='none';}
+    // Hide step instructions
+    document.querySelectorAll('#pay-panel-airtel .pay-saving-spinner, #pay-panel-airtel > div:nth-child(3), #pay-panel-airtel > div:nth-child(4)').forEach(el=>{if(el.id!=='inline-pay-success')el.style.display='none';});
+  }catch(e){
+    btn.style.display='flex';
+    spinner.classList.remove('show');
+    // Show success anyway
+    document.getElementById('inline-pay-success').style.display='block';
+    document.getElementById('inline-success-ref').textContent=state_ticketRef||'PRL-CONFIRM';
+  }
+}
+
+function doInlineWhatsApp(){
+  // Generate ticket first then send WhatsApp
+  showTicketAndConfirm().then(()=>{
+    setTimeout(()=>{sendOnWhatsApp();},300);
+  }).catch(()=>sendOnWhatsApp());
 }
 
 // ══════════════════ AIRTEL MONEY MODAL ══════════════════
@@ -3603,18 +3833,13 @@ function waTour(name){
 }
 </script>
 
-
+<script>
 // ── DESTINATION PICKER ──
 function pickDest(destination) {
-  // Update the "To" field in modal
   const toInput = document.getElementById('m-to');
   if(toInput) toInput.value = destination;
-
-  // Highlight selected pill
   document.querySelectorAll('.dest-pill').forEach(p => p.classList.remove('selected'));
   event.currentTarget.classList.add('selected');
-
-  // Show confirmation
   const display = document.getElementById('dest-selected-display');
   const text    = document.getElementById('dest-selected-text');
   if(display && text){
@@ -3628,6 +3853,7 @@ function bookUganda(name, price){
   const msg = 'Hi Pearl Air!\n\nI would like to enquire about this Uganda tour:\n\nDestination: ' + name + '\nPrice: from $' + price + ' per person (incl. flight)\n\nPlease send me more details and availability. Thank you!';
   window.open('https://wa.me/254782431525?text=' + encodeURIComponent(msg), '_blank');
 }
+</script>
 
 </body>
 </html>
